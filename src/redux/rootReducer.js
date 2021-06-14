@@ -11,6 +11,7 @@ import templateReducer from "./templateTable/templateReducer";
 import unitReducer from "./unitMaster/unitReducer";
 import vendorReducer from "./vendorMaster/vendorReducer";
 import workReducer from "./workMaster/workReducer";
+import userReducer from "./userMaster/userReducer";
 
 // Author: Ashutosh Rao Chawan U & Suggala Manasvi
 // This is the rootReducer which uses the combineReducers method to combine all the reducers, so that it can be passed as a parameter to the redux store.
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   unitReducer,
   vendorReducer,
   workReducer,
+  userReducer,
 });
 
 export default rootReducer;
