@@ -24,7 +24,7 @@ import {
   SIGN_IN_USER_FAILURE,
 } from "./userTypes";
 
-const API_URL = "http://boqtobom.aqsaindia.com/api/v1/";
+const API_URL = "https://boqtobom.aqsaindia.com:9001/api/v1";
 
 // Method used to insert users to the database through the springBoot API
 export const insertUser = (user) => {
@@ -64,7 +64,7 @@ export const findAllUsers = () => {
   return async (dispatch) => {
     await dispatch(findAllUsersRequest());
     await axios
-      .get(API_URL + "/users/findAllUsers")
+      .get(API_URL + "/user/findAllUsers")
       .then((response) => {
         // response.data is the users
         const users = response.data;
@@ -127,7 +127,7 @@ export const signInUser = (user) => {
   return async (dispatch) => {
     await dispatch(signInUserRequest());
     await axios
-      .post(API_URL + "/signIn", user)
+      .post(API_URL + "/user/signIn", user)
       .then((response) => {
         const user = response.data;
         dispatch(signInUserSuccess(user));

@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+html, body {
+  height: 100%;
+}
+
+.lake{
+  background: #D3E3FC;
+}
+
+.sky{
+  background: #F1F3F3;
+}
