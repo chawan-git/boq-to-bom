@@ -19,7 +19,6 @@ class CreateUserComponent extends Component {
   };
 
   handleChange = async (event) => {
-    console.log(event.target.value);
     await this.setState({
       ...this.state,
       payload: {
@@ -31,26 +30,19 @@ class CreateUserComponent extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    //  this.props.userReducer.findAllUsers.users.every(async(element) => {
-    //    if(element.username === this.state.payload.username){
-    //     await this.setState({
-    //       ...this.state,
-    //       error: "Username already exists",
-    //     });
-    //     return false;
-    //   };
-    //   return true;
-    // });
+    await this.setState({
+      ...this.state,
+      error: "",
+    });
     for(let i=0; i<this.props.userReducer.findAllUsers.users.length;i++){
-      if(this.props.userReducer.findAllUsers.users[i].username === this.state.username){
+      if(this.props.userReducer.findAllUsers.users[i].username === this.state.payload.username){
         await this.setState({
           ...this.state,
-          error: "Username already exists",
+          error: "Username already exists!",
         });
         break;
       }
     }
-    console.log(this.state)
     if(this.state.error === ""){
     await this.props.insertUser(this.state.payload);
     if (this.props.userReducer.insertUser.user === "") {
@@ -94,11 +86,11 @@ class CreateUserComponent extends Component {
           <br />
           <div className="row">
             <div className="col-12 text-center">
-              <h3 className="fw-bold">{this.state.error}</h3>
+              <h4 className="fw-bold "><i>{this.state.error}</i></h4>
             </div>
           </div>
           <br />
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <div className="row">
               <div className="col-2">
                 <label htmlFor="employee_id">
@@ -112,7 +104,7 @@ class CreateUserComponent extends Component {
                   id="employee_id"
                   value={this.state.payload.employee_id}
                   onChange={this.handleChange}
-                  required
+                  required="required"
                   className="form-control"
                 />
               </div>
@@ -205,8 +197,6 @@ class CreateUserComponent extends Component {
                 <button
                   type="submit"
                   className="btn btn-success col-12 fw-bold"
-                  onClick={this.handleSubmit}
-
                 >
                   Add User
                 </button>

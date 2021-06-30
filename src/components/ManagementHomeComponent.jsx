@@ -5,6 +5,7 @@ import CreateUserComponent from "./CreateUserComponent";
 import FooterComponent from "./FooterComponent";
 import ManagementDashboard from "./ManagementDashboard";
 import ManagementHeaderComponent from "./ManagementHeaderComponent";
+import ViewUserComponent from "./ViewUserComponent";
 
 export class ManagementHomeComponent extends Component {
   componentDidMount() {
@@ -24,6 +25,7 @@ export class ManagementHomeComponent extends Component {
         <ManagementHeaderComponent />
         <Route path="/management/home" component={ManagementDashboard} />
         <Route path="/management/createuser" component={CreateUserComponent} />
+        <Route path="/management/viewuser" component={ViewUserComponent} />
         <FooterComponent />
       </>
     );

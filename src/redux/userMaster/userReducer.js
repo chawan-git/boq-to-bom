@@ -9,6 +9,9 @@ import {
   FIND_ALL_USERS_REQUEST,
   FIND_ALL_USERS_SUCCESS,
   FIND_ALL_USERS_FAILURE,
+  FIND_ALL_USERS_NOT_DELETED_REQUEST,
+  FIND_ALL_USERS_NOT_DELETED_SUCCESS,
+  FIND_ALL_USERS_NOT_DELETED_FAILURE,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
@@ -36,7 +39,12 @@ const initialState = {
   },
   findAllUsers: {
     loading: false,
-    user: "",
+    users: [],
+    error: "",
+  },
+  findAllUsersNotDeleted: {
+    loading: false,
+    users: [],
     error: "",
   },
   updateUser: {
@@ -159,6 +167,37 @@ const userReducer = (state = initialState, action) => {
           },
         },
       };
+      case FIND_ALL_USERS_NOT_DELETED_REQUEST:
+        return {
+          ...state,
+          findAllUsersNotDeleted: {
+            loading: true,
+            users: [],
+            error: "",
+          },
+        };
+      case FIND_ALL_USERS_NOT_DELETED_SUCCESS:
+        return {
+          ...state,
+          findAllUsersNotDeleted: {
+            loading: false,
+            users: action.payload,
+            error: "",
+          },
+        };
+      case FIND_ALL_USERS_NOT_DELETED_FAILURE:
+        return {
+          ...state,
+          findAllUsersNotDeleted: {
+            loading: false,
+            users: [],
+            error: {
+              message: action.payload.response
+                ? action.payload.response.data
+                : action.payload.message,
+            },
+          },
+        };
     case UPDATE_USER_REQUEST:
       return {
         ...state,

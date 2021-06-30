@@ -10,6 +10,9 @@ import {
   FIND_ALL_USERS_REQUEST,
   FIND_ALL_USERS_SUCCESS,
   FIND_ALL_USERS_FAILURE,
+  FIND_ALL_USERS_NOT_DELETED_REQUEST,
+  FIND_ALL_USERS_NOT_DELETED_SUCCESS,
+  FIND_ALL_USERS_NOT_DELETED_FAILURE,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
@@ -76,6 +79,24 @@ export const findAllUsers = () => {
       });
   };
 };
+
+// Method used to find all the users from the database using the SpringBoot API
+export const findAllUsersNotDeleted = () => {
+  return async (dispatch) => {
+    await dispatch(findAllUsersNotDeletedRequest());
+    await axios
+      .get(API_URL + "/user/findAllUsersNotDeleted")
+      .then((response) => {
+        // response.data is the users
+        const users = response.data;
+        dispatch(findAllUsersNotDeletedSuccess(users));
+      })
+      .catch((error) => {
+        // error.message is the error message
+        dispatch(findAllUsersNotDeletedFailure(error));
+      });
+  };
+};
 // Method used to update the user details in the database through the springBoot API
 export const updateUser = (user) => {
   return async (dispatch) => {
@@ -93,11 +114,14 @@ export const updateUser = (user) => {
 };
 
 // Method used to delete a user from the database through the SpringBoot API
-export const deleteUser = (user) => {
+export const deleteUser = (id) => {
+
   return async (dispatch) => {
+
     await dispatch(deleteUserRequest());
+
     await axios
-      .delete(API_URL + "/user/deleteUser", user)
+      .delete(API_URL + "/user/deleteUser/" + id)
       .then((response) => {
         const user = response.data;
         dispatch(deleteUserSuccess(user));
@@ -108,11 +132,11 @@ export const deleteUser = (user) => {
   };
 };
 // Method used to delete a user permanently from the database through the SpringBoot API
-export const deleteUserPermanently = (user) => {
+export const deleteUserPermanently = (id) => {
   return async (dispatch) => {
     await dispatch(deleteUserPermanentlyRequest());
     await axios
-      .delete(API_URL + "/user/deleteUserPermanently", user)
+      .delete(API_URL + "/user/deleteUserPermanently/"+id)
       .then((response) => {
         const user = response.data;
         dispatch(deleteUserPermanentlySuccess(user));
@@ -181,16 +205,35 @@ export const findAllUsersRequest = () => {
   };
 };
 
-export const findAllUsersSuccess = (user) => {
+export const findAllUsersSuccess = (users) => {
   return {
     type: FIND_ALL_USERS_SUCCESS,
-    payload: user,
+    payload: users,
   };
 };
 
 export const findAllUsersFailure = (error) => {
   return {
     type: FIND_ALL_USERS_FAILURE,
+    payload: error,
+  };
+};
+export const findAllUsersNotDeletedRequest = () => {
+  return {
+    type: FIND_ALL_USERS_NOT_DELETED_REQUEST,
+  };
+};
+
+export const findAllUsersNotDeletedSuccess = (users) => {
+  return {
+    type: FIND_ALL_USERS_NOT_DELETED_SUCCESS,
+    payload: users,
+  };
+};
+
+export const findAllUsersNotDeletedFailure = (error) => {
+  return {
+    type: FIND_ALL_USERS_NOT_DELETED_FAILURE,
     payload: error,
   };
 };
